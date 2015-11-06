@@ -21,6 +21,7 @@ public class MainLign extends GameObject implements UpdateAble {
     public InkTank inkTank;
     public Rectangle collisionRectangle;
     private TileMapHelper mapHelper;
+    public float health = 100;
 
     public MainLign(Color c, Main main) {
         if (c == Color.ORANGE){
@@ -76,8 +77,10 @@ public class MainLign extends GameObject implements UpdateAble {
         representation.setRotation(rotation);
         collisionRectangle.setLocation(lignX, lignY);
 
-        //Recharge Ink tank
-        if (splatFactory.intersectsWithSplat(collisionRectangle, Color.ORANGE, (int)x, (int)y)) {
+        //Harm the squid or recharge ink tank
+        if (splatFactory.intersectsWithSplat(collisionRectangle, Color.BLUE, (int) x, (int) y)){
+            health -= 0.2F;
+        }else if (splatFactory.intersectsWithSplat(collisionRectangle, Color.ORANGE, (int)x, (int)y)) {
             inkTank.refill(0.2F);
         }
     }

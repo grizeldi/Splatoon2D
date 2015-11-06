@@ -45,7 +45,8 @@ public class Main extends BasicGame{
 
     @Override
     public void update(GameContainer gameContainer, int tpf) throws SlickException {
-        updater.update(gameContainer, tpf);
+        if (mainChar.health > 0)
+            updater.update(gameContainer, tpf);
 
         //Exit check
         Input input = gameContainer.getInput();
@@ -66,15 +67,19 @@ public class Main extends BasicGame{
 
     @Override
     public void render(GameContainer gameContainer, Graphics g) throws SlickException {
-        background.draw(0, 0);
-        mapHelper.getBackgroundMap().render((int) mainChar.x, (int) mainChar.y);
-        splatFactory.renderSplats((int) mainChar.x, (int) mainChar.y);
-        npcManager.renderSquids((int)mainChar.x, (int)mainChar.y);
+        if (mainChar.health > 0) {
+            background.draw(0, 0);
+            mapHelper.getBackgroundMap().render((int) mainChar.x, (int) mainChar.y);
+            splatFactory.renderSplats((int) mainChar.x, (int) mainChar.y);
+            npcManager.renderSquids((int) mainChar.x, (int) mainChar.y);
 
-        mainChar.getRepresentation().draw((gameContainer.getWidth() / 2) - (mainChar.getRepresentation().getWidth() / 2), (gameContainer.getHeight() / 2) - (mainChar.getRepresentation().getHeight() / 2));
-        mainChar.inkTank.render(gameContainer);
+            mainChar.getRepresentation().draw((gameContainer.getWidth() / 2) - (mainChar.getRepresentation().getWidth() / 2), (gameContainer.getHeight() / 2) - (mainChar.getRepresentation().getHeight() / 2));
+            mainChar.inkTank.render(gameContainer);
 
-        guiRenderer.renderGui(0, 0);
+            guiRenderer.renderGui((int) mainChar.health, 100);
+        }else {
+            g.drawString("GAME OVER!", 50, 50);
+        }
 
         g.drawString("Squids splatted: " + squidsKilled, 20, gameContainer.getHeight() - 20 - g.getFont().getHeight("Squids"));
     }

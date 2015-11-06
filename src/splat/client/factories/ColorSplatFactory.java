@@ -12,10 +12,12 @@ import java.util.List;
 public class ColorSplatFactory implements UpdateAble {
     private List<Splat> splats = new ArrayList<Splat>(), scheduled = new ArrayList<Splat>();
     private Image orangeSplat;
+    private Image blueSplat;
 
     public ColorSplatFactory() {
         try {
             orangeSplat = new Image("data/sprites/splats/orange.png");
+            blueSplat = new Image("data/sprites/splats/blue.png");
         } catch (SlickException e) {
             System.exit(-1);
         }
@@ -37,6 +39,9 @@ public class ColorSplatFactory implements UpdateAble {
             if (splat.color == Color.ORANGE){
                 orangeSplat.setAlpha(splat.opacity);
                 orangeSplat.draw(splat.x + backX, splat.y + backY);
+            }else if (splat.color == Color.BLUE){
+                blueSplat.setAlpha(splat.opacity);
+                blueSplat.draw(splat.x + backX, splat.y + backY);
             }
         }
     }

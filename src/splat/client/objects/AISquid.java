@@ -25,6 +25,7 @@ public class AISquid extends GameObject implements UpdateAble {
     private Rectangle collisionRectangle;
     public MainLign mainLign;
     public float opacity = 1.0F;
+    private int splatCount = 0;
 
     public AISquid(float x, float y, Color c, Main main) {
         color = c;
@@ -63,6 +64,12 @@ public class AISquid extends GameObject implements UpdateAble {
             Main.squidsKilled ++;
 
             deadReported = true;
+        }
+        if (splatCount > 10){
+            splatFactory.createNewSplat((int)x, (int)y, Color.BLUE);
+            splatCount = 0;
+        }else {
+            splatCount++;
         }
     }
 

@@ -17,7 +17,9 @@ public class GUIRenderer {
     public void renderGui(int mainCharHealth, int mainCharMaxHealth){
         //render health stuff
         healthBack.draw(0, 30);
-        healthTop.draw(0, 30+healthDrawY);
+        int width = Math.round(healthTop.getWidth() * mainCharHealth / mainCharMaxHealth);
+
+        healthTop.getSubImage(0, 0, width, healthTop.getHeight()).draw(0, 30+healthDrawY);
     }
 
 }
