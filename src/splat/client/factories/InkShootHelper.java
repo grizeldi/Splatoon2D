@@ -1,5 +1,7 @@
 package splat.client.factories;
 
+import splat.client.Main;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -8,16 +10,19 @@ public class InkShootHelper {
     private static final Random random = new Random();
     private static final float splatPadding = 10.14F;
     private static final int randomMovement = 5;
+    private final TileMapHelper mapHelper;
 
-    public InkShootHelper(ColorSplatFactory splatFactory) {
-        this.splatFactory = splatFactory;
+    public InkShootHelper(Main main) {
+        splatFactory = main.splatFactory;
+        mapHelper = main.mapHelper;
     }
 
     /**
      * Generates a bunch of splats.
+     * Uses absolute coords.
      * @param x Character x.
      * @param y Character y.
-     * @param rotation Rotation of character.
+     * @param rotation Rotation of character (direction).
      * @param x2 Mouse click x.
      * @param y2 Mouse click y.
      * @return Amount of ink used.
@@ -29,33 +34,49 @@ public class InkShootHelper {
         if (xFloat < x2 && yFloat < y2) {
             while (xFloat < x2 && yFloat < y2) {
                 splatFactory.createNewSplat((int) xFloat + random.nextInt(randomMovement), (int) yFloat + random.nextInt(randomMovement), Color.ORANGE);
-                xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
-                yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
                 i++;
+                if (mapHelper.isBlocked(xFloat + splatPadding * Math.cos(rotation), yFloat + splatPadding * Math.sin(Math.toRadians(rotation))))
+                    return i;
+                else {
+                    xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
+                    yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
+                }
             }
             return i;
         }else if (xFloat > x2 && yFloat > y2){
             while (xFloat > x2 && yFloat > y2) {
                 splatFactory.createNewSplat((int) xFloat + random.nextInt(randomMovement), (int) yFloat + random.nextInt(randomMovement), Color.ORANGE);
-                xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
-                yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
                 i++;
+                if (mapHelper.isBlocked(xFloat + splatPadding * Math.cos(rotation), yFloat + splatPadding * Math.sin(Math.toRadians(rotation))))
+                    return i;
+                else {
+                    xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
+                    yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
+                }
             }
             return i;
         }else if (xFloat < x2 && yFloat > y2){
             while (xFloat < x2 && yFloat > y2) {
                 splatFactory.createNewSplat((int) xFloat + random.nextInt(randomMovement), (int) yFloat + random.nextInt(randomMovement), Color.ORANGE);
-                xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
-                yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
                 i++;
+                if (mapHelper.isBlocked(xFloat + splatPadding * Math.cos(rotation), yFloat + splatPadding * Math.sin(Math.toRadians(rotation))))
+                    return i;
+                else {
+                    xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
+                    yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
+                }
             }
             return i;
         }else if (xFloat > x2 && yFloat < y2){
             while (xFloat > x2 && yFloat < y2) {
                 splatFactory.createNewSplat((int) xFloat + random.nextInt(randomMovement), (int) yFloat + random.nextInt(randomMovement), Color.ORANGE);
-                xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
-                yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
                 i++;
+                if (mapHelper.isBlocked(xFloat + splatPadding * Math.cos(rotation), yFloat + splatPadding * Math.sin(Math.toRadians(rotation))))
+                    return i;
+                else {
+                    xFloat += splatPadding * Math.cos(Math.toRadians(rotation));
+                    yFloat += splatPadding * Math.sin(Math.toRadians(rotation));
+                }
             }
             return i;
         }

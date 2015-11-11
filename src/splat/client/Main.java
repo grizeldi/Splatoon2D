@@ -14,8 +14,9 @@ public class Main extends BasicGame{
     private Updater updater = new Updater();
     public ColorSplatFactory splatFactory;
     private NPCManager npcManager;
-    private MusicPlayer musicPlayer;
+    public MusicPlayer musicPlayer;
     private InkShootHelper splatHelper;
+    public SoundEffectPlayer soundPlayer;
     private Image background;
     GUIRenderer guiRenderer;
     public static int squidsKilled = 0;
@@ -27,12 +28,13 @@ public class Main extends BasicGame{
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         //Load stuff
+        soundPlayer = new SoundEffectPlayer();
         mapHelper = new TileMapHelper();
         splatFactory = new ColorSplatFactory();
-        npcManager = new NPCManager(this);
         mainChar = new MainLign(Color.ORANGE, this);
+        npcManager = new NPCManager(this);
         musicPlayer = new MusicPlayer();
-        splatHelper = new InkShootHelper(splatFactory);
+        splatHelper = new InkShootHelper(this);
         guiRenderer = new GUIRenderer(gameContainer);
         background = new Image("data/back.jpg").getScaledCopy(gameContainer.getWidth(), gameContainer.getHeight());
 
@@ -61,7 +63,8 @@ public class Main extends BasicGame{
             //mainChar.inkTank.useUp(1);
             int absoluteCharX = (int)mainChar.x * -1 + (gameContainer.getWidth() / 2) - 12, absoluteCharY = (int)mainChar.y * -1 + (gameContainer.getHeight() / 2) -12;
             mainChar.inkTank.useUp(splatHelper.generateSplatPath(absoluteCharX, absoluteCharY,
-                    input.getMouseX() + (int) mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, mainChar.rotation));
+                    input.getMouseX() + (int) mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, mainChar.rotation) / 3);
+            soundPlayer.playSound(SoundEffectPlayer.sounds.SHOOT);
         }
     }
 

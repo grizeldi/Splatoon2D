@@ -5,6 +5,7 @@ import splat.client.ai.SquidAI;
 import splat.client.factories.ColorSplatFactory;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
+import splat.client.factories.SoundEffectPlayer;
 import splat.client.factories.TileMapHelper;
 import splat.client.objects.mainChar.MainLign;
 import splat.client.updating.UpdateAble;
@@ -24,18 +25,23 @@ public class AISquid extends GameObject implements UpdateAble {
     public TileMapHelper mapHelper;
     private Rectangle collisionRectangle;
     public MainLign mainLign;
+    private SoundEffectPlayer soundEffectPlayer;
     public float opacity = 1.0F;
     private int splatCount = 0;
+    private SoundEffectPlayer player;
 
     public AISquid(float x, float y, Color c, Main main) {
         color = c;
         splatFactory = main.splatFactory;
         mainLign = main.mainChar;
         mapHelper = main.mapHelper;
+        player = main.soundPlayer;
         ai = new SquidAI(this);
         health = new HealthBar(333);
         this.x = x;
         this.y = y;
+        rotation = -5;
+        soundEffectPlayer = main.soundPlayer;
         try {
             if (c == Color.ORANGE)
                 representation = new Image("data/sprites/oranzenLign.png");
@@ -60,7 +66,7 @@ public class AISquid extends GameObject implements UpdateAble {
             health.damage(1);
         }
         if (health.isDead() && !deadReported){
-            //TODO play a sound
+            soundEffectPlayer.playSound(SoundEffectPlayer.sounds.SQUID_DIE);
             Main.squidsKilled ++;
 
             deadReported = true;
@@ -68,6 +74,7 @@ public class AISquid extends GameObject implements UpdateAble {
         if (splatCount > 10){
             splatFactory.createNewSplat((int)x, (int)y, Color.BLUE);
             splatCount = 0;
+            soundEffectPlayer.playSound(SoundEffectPlayer.sounds.SHOOT, 0.3F);
         }else {
             splatCount++;
         }

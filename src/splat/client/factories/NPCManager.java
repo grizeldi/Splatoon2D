@@ -23,13 +23,16 @@ public class NPCManager implements UpdateAble, Runnable{
         sleeperThread.setDaemon(true);
         sleeperThread.start();
         this.main = main;
+
+        for (int i = 0; i < 4; i++)
+            squidsList.add(new AISquid(3008, 672, Color.BLUE, main));
     }
 
     @Override
     public void update(GameContainer container, float tpf) {
         synchronized (lock) {
             if (spawnNewSquid) {
-                squidsList.add(new AISquid(350, 370, Color.BLUE, main));
+                squidsList.add(new AISquid(3008, 672, Color.BLUE, main));
                 spawnNewSquid = false;
                 System.out.println("A new NPC squid spawned.");
             }

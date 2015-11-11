@@ -8,7 +8,7 @@ public class MusicPlayer {
 
     public MusicPlayer() {
         try {
-            splatAttak = new Music("data/inkattack.ogg");
+            splatAttak = new Music("data/sound/music/inkattack.ogg");
         } catch (SlickException e) {
             System.exit(-2);
         }

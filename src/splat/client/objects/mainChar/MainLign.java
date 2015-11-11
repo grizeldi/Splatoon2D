@@ -37,7 +37,8 @@ public class MainLign extends GameObject implements UpdateAble {
                 System.exit(-1);
             }
         }
-        y = -80;
+        x = -100;
+        y = -400;
         representation.setCenterOfRotation(18, 18);
         collisionRectangle = new Rectangle(33, 33);
         splatFactory = main.splatFactory;

@@ -19,7 +19,7 @@ public class TileMapHelper {
         }
         //Init blocked tiles.
         blockedTiles = new boolean[backgroundMap.getWidth()][backgroundMap.getHeight()];
-        int layerID = backgroundMap.getLayerIndex("Edges");
+        int layerID = backgroundMap.getLayerIndex("Collidables");
         for (int xAxis = 0; xAxis < backgroundMap.getWidth(); xAxis ++){
             for (int yAxis = 0; yAxis < backgroundMap.getHeight(); yAxis ++){
                 int tileID = backgroundMap.getTileId(xAxis, yAxis, layerID);
