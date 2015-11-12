@@ -44,12 +44,12 @@ public class NetworkReader implements Runnable{
         private boolean exit = false;
         public boolean shouldRead = false;
         private PrintWriter out;
-        int clientID;
+        int peerID;
 
         public ListenerThread(Socket sock, PipedInputStream str, int clientID) throws IOException{
             in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(new PipedOutputStream(str)));
-            this.clientID = clientID;
+            this.peerID = clientID;
             start();
         }
 
