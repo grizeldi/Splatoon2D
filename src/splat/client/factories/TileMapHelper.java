@@ -20,10 +20,19 @@ public class TileMapHelper {
         //Init blocked tiles.
         blockedTiles = new boolean[backgroundMap.getWidth()][backgroundMap.getHeight()];
         int layerID = backgroundMap.getLayerIndex("Collidables");
+        int edgeLayerID = backgroundMap.getLayerIndex("Edges");
         for (int xAxis = 0; xAxis < backgroundMap.getWidth(); xAxis ++){
             for (int yAxis = 0; yAxis < backgroundMap.getHeight(); yAxis ++){
                 int tileID = backgroundMap.getTileId(xAxis, yAxis, layerID);
-                String isBlocked = backgroundMap.getTileProperty(tileID, "blocked", "false");
+                int edgeTileID = backgroundMap.getTileId(xAxis, yAxis, edgeLayerID);
+                String isBlocked = "";
+                try {
+                    isBlocked = backgroundMap.getTileProperty(tileID, "blocked", "false");
+                    if (!isBlocked.equals("true")){
+                        isBlocked = backgroundMap.getTileProperty(edgeTileID, "blocked", "false");
+                    }
+                    assert true;
+                }catch (NullPointerException e){}
                 if (isBlocked.equals("true")){
                     blockedTiles [xAxis] [yAxis] = true;
                 }
