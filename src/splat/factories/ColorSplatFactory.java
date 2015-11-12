@@ -1,9 +1,9 @@
-package splat.client.factories;
+package splat.factories;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import splat.client.updating.UpdateAble;
+import splat.updating.UpdateAble;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class ColorSplatFactory implements UpdateAble {
     }
 }
 
-class Splat implements UpdateAble{
+class Splat implements UpdateAble {
     int x, y, timeToRemoval;
     float opacity = 1F;
     static final int maxTimeAlive = 600;

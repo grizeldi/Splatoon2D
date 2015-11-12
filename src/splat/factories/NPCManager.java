@@ -1,9 +1,9 @@
-package splat.client.factories;
+package splat.factories;
 
-import splat.client.Main;
+import splat.Main;
 import org.newdawn.slick.GameContainer;
-import splat.client.objects.AISquid;
-import splat.client.updating.UpdateAble;
+import splat.objects.AISquid;
+import splat.updating.UpdateAble;
 
 import java.awt.*;
 import java.util.ArrayList;

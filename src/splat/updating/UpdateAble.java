@@ -1,4 +1,4 @@
-package splat.client.updating;
+package splat.updating;
 
 import org.newdawn.slick.GameContainer;
 

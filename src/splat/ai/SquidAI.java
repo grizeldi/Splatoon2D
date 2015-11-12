@@ -1,8 +1,8 @@
-package splat.client.ai;
+package splat.ai;
 
 import org.newdawn.slick.GameContainer;
-import splat.client.objects.AISquid;
-import splat.client.updating.UpdateAble;
+import splat.objects.AISquid;
+import splat.updating.UpdateAble;
 
 import java.util.Random;
 

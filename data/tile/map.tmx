@@ -2,9 +2,74 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="32" tileheight="32" nextobjectid="3">
  <tileset firstgid="1" name="concrete" tilewidth="32" tileheight="32" tilecount="4">
   <image source="tiles/concrete.jpg" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="hard" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="hard" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="hard" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="hard" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="5" name="grass" tilewidth="32" tileheight="32" tilecount="9">
   <image source="tiles/Grass.png" width="96" height="96"/>
+  <tile id="0">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="graas" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="14" name="edge_tileset" tilewidth="32" tileheight="32" tilecount="12">
   <properties>
@@ -107,17 +172,17 @@
  </layer>
  <layer name="Collidables" width="100" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2bW3LDIAxFtY62aWn3v8jWH5k4VFiSLZAg98zwE2OH6ARh+UGUm8/J2spExxaeHkTHD24etH7H90Gz9I/2MZOX1ti/hP1uhv51XzjhORr3qj6yOpHGnM2HZw7MhmbMko9Cz/H5MfS1xLR17KuOzxI1pyUfHnAxtToe5SPKw0gfhfTxl47Rw0e0g9E+PCnk5yQ69iv42ChkmyscV+PGrY9HdZy2nckdWdCu9TXe/+Eb89krUgg+slHI5qNHjt/GMHOe8aZQXx8r5fhRSGvJHcR+DBofkgvE3o9Cx9doiPkMLsZRzxciuIhE6wPnqWOAj1xofSBX9eHtr73v2pm6Dvhx5r4VfPRD6wO1Xn+2XKWpBTEfxqCtzeFjDPCRC/jIg7R21LXH/pz4Y/RgF0fjArV5X/Z1n9YFNbbBh4265tY64HwQsw0+2myxr/O5x/PAe7jtWEN4uGc0vJ/dbfWDk/9E+pg5b3E53aNx56OeLkjoP+v5b7Z3brQuSLnvbE4y+9CgOc7ZuVLnjhFus/mwYjm2FFPpHljUuzUZ497C+r1cTO8etE7rZnEszbEzPrJhHf/VmtQybyzva3L9Z3OxETG/M/jIzKv5mIFIJ1IdpulrvaY6C5FeerfZiY4fXOiIju1qLn4BMFMY6SBOAAA=
+   H4sIAAAAAAAAC+2bW3KDMAxFtY60aZXufxEsrXhaJoQRWDLCuiKcGf8Ehyg6fmA7IcLmK1k5M9G5vTw9ic7f5ebJ2vd4bBRL/Wgfmbysxf5ded/dUH9Z93IisxX3WX2gOqnFjObDcwxEQxNzzQfTa35+DHUtOV27917HrUT16ZoPD6ScWh338hHloacPJn3+a/c4wke0g94+PGHycxKd+zP4KDDZ+orE3rxJ8+PWOk5bWsYOFLRz/RLvNnwXXntHmN7Xx9iPBh5L54+twmTzccQYX2LoPc6MMQx3QB8FpmN9eIzxt7F8jOWz4b0SyD4Ktblkokfut+LzGteKj/F+w+O/MJgbjY+aiyPHHG8fYz8bPmblBuaDaXuPhoTXerkoePvIxrK/EMW5KDDlX1/sQesDrb1O8/5UvOb/aLL6kM43iqPsXrQ+0MYPyUfG9f+yn7es6xBgWj8/ykTLuRWiD4kp3kxzi9ZHxr3UabyynJ1HUtqNZi2IGn8Npr+2k8WHdm2OGr8Wphz9+118WPHew9Ry+ZCJ2KOpzR3LtQfi88lRz029fWhcZFibM72uNbzi6uFj3pa0LmjlGoqPOZ5rcSbfeX/Zj7UOJB8kXDu7jz1Ie2YevweeI11HmUMmmDCeY6V24f3b3bV6aE4QiPSBMD60Io3pHkV6HvV0QZX6SM+/FtD+c6N1Qcr3ZnOC7EOD5j6tfSViPxzNhxXLvWs5rZ2BRf23BjHva1g/V8rp5EHrdFksjmt9rMUHGtb4965JLf3GesZh9YFIRP9G8IHMu/nIQKST2jpMU9e6p5qFSC9Hl+xE5+9yoSM6t2dz8QvWjqeSIE4AAA==
   </data>
  </layer>
  <layer name="Grass" width="100" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XywqAIBAFUJc9//93IyKINpkpDXUOzM6FeGVGU4qtL6jhlZ1+X0kW8mjjfMZTRsmjjdL73t1cz7Un/UcedT2dB/Kop8Z8HtM2R+YWG/wR76V69h7RsuSRTx6xyCOWYx45f7aSMp/zeWPGIo9Y5BGLPxgAAAAAAAAAAAAAAAAAqwVMV52ZIE4AAA==
+   H4sIAAAAAAAAC+2bWQ7DIAxE+emSLve/To5WqISUplXZTJkp8yT/Qx4B2wnOYbNUxGXISP+fGhcsPg4+jps4jR1Okv0zvmUEk4+z41lDtes9zhF5bhEWHy37j3zY0noeMPm4ute99j52OG9YnM9xjmhzY+Mf8iUU9vtgj5jNR0suLB/2tJz18mGPlY+cmq0mZjufLXzMtoZ70pILywcW8oGFajBRyj5fE9/p/Yzkowz5wELPSAgxC6Efiv4/wEzEmlROMJi174jA9luNGE/oz6hfhkVwor1JCDEL6tGk+WXfTz7SyAcW6osLK3z+vd58+Fx8HT0W8axPV/9Or2f5gKDUB9t9NTZKfTDcx7Em7uk9Yru2QyzykSSu2U7x6d9v+fjCj30UvR/o99V6MOL9GDlfdDJ9qP6spLTmyvAB6YIlFy7NKRM+IF0EWM56Qx+wLgKT+YB2EWDzsbi8mo3RRYAlF27MXylcMNHgg8bFA45fxcUgTgAA
   </data>
  </layer>
  <layer name="Edges" width="100" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3aWQrDMAxFUa+g87j/jTYqCISJkw44erLeBf8bH+SkpKVgd5nWPsi6djoDlMTi7r2JL3qUcZ2iWSxlnSLajGRRpzZRXEa2sIkLukkWCw3ZJJuFdvDewExZLaR/Z6TH74GsFtovM6IO2c+uR5962FmgQ7/W7izOwva1ZiTzs9WzOQ9a+DXncdx8F0yrPTgbvtUenA3f6ncsevinM8K7CiP14GxgRA+s6IEVPbCiB1biwXcrnMSDs4HRc1rnQg+U+OzAih5Y0QMremBFD5z03Uqih3/2W9RpWjevjbB3/DaIk72rNHr4xf+V4DQ3GxI9tq9lIdFju8RhV9oWEt+x+qYGaw42zsj/2XO361MDW3aP1ll+s34591aZ76ylZ6tnGWcE1ULKNiPIFloWkwgWmpjI82lUl0gWNnUZySaqRZ21sSuS0ygWS7WcEFcEixdatNknIE4AAA==
+   H4sIAAAAAAAAC+2ZWw7EIAhFXcG8n/vf6AwfZIixTdup7b3ASfxHj6BoKdjcvuNIMu6d1gAFcfHcO4gZvIpfT2wuxrCeGN14clGjbljw7IKNdIFDVBenvQNoENWFIOfJP2d8j34gqgtlSY6oh+hr14OpPmwupId+TKlZ6WBbEM/1yKQPLFo+zptHkSi1D689wPs7DtV47BpRm9qH19xgqQP1HQsxxjVg8SForF5rlcDoAzW+NWj92aHuvQg+mEgfWKQPLJh92L4CsZ9YgvhgvVvZexPjfmohc2Kdizcfku/XwjsXe49lzO8a5rPDI+kDi/SBBZoPlnfxXqD5YHr3Wxu9Wwkoc47sw879UjDqQvr4gTBvpnfxNbG1SkHwEZXIdYGF9IFF+tgO7bPGQLljecX2uvXZPUTmyP+03hjmOLBE9zG0lnPGknUfInLNavUACETMEVQXEUkXOLC58Pz/wOZCkTPe298Qq4sa64b1D8+LizGGPCEOBhcfbPJAuCBOAAA=
   </data>
  </layer>
 </map>

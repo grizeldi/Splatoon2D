@@ -1,6 +1,6 @@
-package splat.client.factories;
+package splat.factories;
 
-import splat.client.Main;
+import splat.Main;
 
 import java.awt.*;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package splat.client.factories;
+package splat.factories;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
