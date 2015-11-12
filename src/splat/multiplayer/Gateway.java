@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 public class Gateway {
     private ServerSocket inGateway;
     private NetworkReader reader = new NetworkReader();
+    private NetworkNotifier notifier = new NetworkNotifier();
 
     public Gateway() {
         try {
