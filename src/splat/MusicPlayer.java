@@ -1,4 +1,4 @@
-package splat.client;
+package splat;
 
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;

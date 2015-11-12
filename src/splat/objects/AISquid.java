@@ -1,14 +1,14 @@
-package splat.client.objects;
+package splat.objects;
 
-import splat.client.Main;
-import splat.client.ai.SquidAI;
-import splat.client.factories.ColorSplatFactory;
+import splat.Main;
+import splat.ai.SquidAI;
+import splat.factories.ColorSplatFactory;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
-import splat.client.factories.SoundEffectPlayer;
-import splat.client.factories.TileMapHelper;
-import splat.client.objects.mainChar.MainLign;
-import splat.client.updating.UpdateAble;
+import splat.factories.SoundEffectPlayer;
+import splat.factories.TileMapHelper;
+import splat.objects.mainChar.MainLign;
+import splat.updating.UpdateAble;
 
 import java.awt.*;
 import java.awt.Color;
@@ -74,7 +74,7 @@ public class AISquid extends GameObject implements UpdateAble {
         if (splatCount > 10){
             splatFactory.createNewSplat((int)x, (int)y, Color.BLUE);
             splatCount = 0;
-            soundEffectPlayer.playSound(SoundEffectPlayer.sounds.SHOOT, 0.3F);
+            soundEffectPlayer.playSound(SoundEffectPlayer.sounds.SHOOT, 0.1F);
         }else {
             splatCount++;
         }

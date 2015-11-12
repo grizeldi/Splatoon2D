@@ -1,4 +1,4 @@
-package splat.client.factories;
+package splat.factories;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;

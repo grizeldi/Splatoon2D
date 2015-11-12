@@ -1,4 +1,4 @@
-package splat.client.objects.mainChar;
+package splat.objects.mainChar;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;

@@ -1,4 +1,4 @@
-package splat.client.objects;
+package splat.objects;
 
 /**
  * Flag interface for game objects

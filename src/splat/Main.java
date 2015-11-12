@@ -1,10 +1,10 @@
-package splat.client;
+package splat;
 
-import splat.client.factories.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import splat.client.objects.mainChar.MainLign;
-import splat.client.updating.Updater;
+import splat.factories.*;
+import splat.objects.mainChar.MainLign;
+import splat.updating.Updater;
 
 import java.awt.Color;
 

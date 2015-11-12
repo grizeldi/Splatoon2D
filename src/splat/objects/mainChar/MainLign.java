@@ -1,14 +1,14 @@
-package splat.client.objects.mainChar;
+package splat.objects.mainChar;
 
-import splat.client.Main;
-import splat.client.factories.ColorSplatFactory;
-import splat.client.objects.GameObject;
-import splat.client.updating.UpdateAble;
+import splat.Main;
+import splat.factories.ColorSplatFactory;
+import splat.objects.GameObject;
+import splat.updating.UpdateAble;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import splat.client.factories.TileMapHelper;
+import splat.factories.TileMapHelper;
 
 import java.awt.*;
 
