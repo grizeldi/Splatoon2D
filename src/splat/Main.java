@@ -63,7 +63,7 @@ public class Main extends BasicGame{
             //mainChar.inkTank.useUp(1);
             int absoluteCharX = (int)mainChar.x * -1 + (gameContainer.getWidth() / 2) - 12, absoluteCharY = (int)mainChar.y * -1 + (gameContainer.getHeight() / 2) -12;
             mainChar.inkTank.useUp(splatHelper.generateSplatPath(absoluteCharX, absoluteCharY,
-                    input.getMouseX() + (int) mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, mainChar.rotation) / 3);
+                    input.getMouseX() + (int) mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, mainChar.rotation) / 2);
             soundPlayer.playSound(SoundEffectPlayer.sounds.SHOOT);
         }
     }
