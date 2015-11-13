@@ -1,0 +1,3 @@
+Specifikacija protokola:
+
+charUpdate (newX, newY, newRotation) - spremenilo se je nekaj na glavnem junaku

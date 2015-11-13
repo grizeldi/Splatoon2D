@@ -1,5 +1,7 @@
 package splat.multiplayer;
 
+import splat.multiplayer.events.CharChangeEvent;
+import splat.multiplayer.events.NetworkEvent;
 import splat.multiplayer.events.NetworkEvents;
 
 import java.io.PrintWriter;
@@ -16,10 +18,11 @@ public final class NetworkNotifier {
         //DODO
     }
 
-    public void notify(NetworkEvents event){
-        switch (event){
+    public void notify(NetworkEvents eventType, NetworkEvent event){
+        switch (eventType){
             case CHAR_CHANGE:
-                //TODO
+                CharChangeEvent exactType = (CharChangeEvent) event;
+
                 break;
             case CHAR_SHOOT:
                 //TODO
