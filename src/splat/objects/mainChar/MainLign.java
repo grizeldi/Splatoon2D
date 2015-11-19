@@ -76,14 +76,14 @@ public class MainLign extends GameObject implements UpdateAble {
 
         if (main.controllerUsed){
             if (input.getAxisValue(0, 4) != 0.0F) {
-                mouseX = input.getAxisValue(0, 4) * 1000 + gameContainer.getWidth() / 2;
+                mouseX = input.getAxisValue(0, 4) * 1000 + (gameContainer.getWidth() / 2 );
             }else {
-                mouseX = 0;
+                mouseX = gameContainer.getWidth() / 2;
             }
             if (input.getAxisValue(0, 5) != 0.0F) {
-                mouseY = input.getAxisValue(0, 5) * 1000 + gameContainer.getHeight() / 2;
+                mouseY = input.getAxisValue(0, 5) * 1000 + (gameContainer.getHeight() / 2 );
             }else {
-                mouseY = 0;
+                mouseY = gameContainer.getHeight() / 2;
             }
         }
         float xDistance = mouseX - lignX, yDistance = mouseY - lignY;
