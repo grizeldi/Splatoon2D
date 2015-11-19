@@ -20,9 +20,12 @@ public class Main extends BasicGame{
     private Image background;
     GUIRenderer guiRenderer;
     public static int squidsKilled = 0;
+    private boolean shootButtonDown;
+    public boolean controllerUsed;
 
-    public Main(String title) {
+    public Main(String title, boolean controllerUsed) {
         super(title);
+        this.controllerUsed = controllerUsed;
     }
 
     @Override
@@ -53,11 +56,11 @@ public class Main extends BasicGame{
         //Exit check
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
-            musicPlayer.stop();
             System.exit(1);
         }
 
-        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && !mainChar.inkTank.isEmpty()){
+        if ((input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || (input.isButtonPressed(5,0) && !shootButtonDown && controllerUsed)) && !mainChar.inkTank.isEmpty()){
+            shootButtonDown = true;
             //TODO IMPORTANT!!! SPLAT LOCATION PLACEMENT!!!!!
             //splatFactory.createNewSplat(input.getMouseX() + (int)mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, Color.ORANGE);
             //mainChar.inkTank.useUp(1);
@@ -66,6 +69,16 @@ public class Main extends BasicGame{
                     input.getMouseX() + (int) mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, mainChar.rotation) / 3);
             soundPlayer.playSound(SoundEffectPlayer.sounds.SHOOT);
         }
+
+        //Controller debug
+        if (!input.isButtonPressed(5, 0)){
+            shootButtonDown = false;
+        }
+
+        System.out.println("Axis " + input.getAxisName(0, 4) + ":");
+        System.out.println(input.getAxisValue(0, 4));
+        System.out.println("Axis " + input.getAxisName(0, 5) + ":");
+        System.out.println(input.getAxisValue(0, 5));
     }
 
     @Override
@@ -89,7 +102,7 @@ public class Main extends BasicGame{
 
     public static void main(String [] args){
         try {
-            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D"));
+            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", true));
             //cont.setDisplayMode(cont.getScreenWidth(), cont.getScreenHeight(), true);
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);
