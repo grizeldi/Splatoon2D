@@ -8,14 +8,17 @@ import java.net.Socket;
 
 public class Main implements Runnable{
     boolean shouldExit = false;
+    private int maxClients;
     private ServerSocket serverSocket;
     private Thread socketAccepter;
+    private ClientManager clientManager;
 
     public static void main(String [] args){
-        new Main();
+        new Main(Integer.parseInt(args[0]));
     }
 
-    public Main() {
+    public Main(int i) {
+        maxClients = i;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,6 +43,7 @@ public class Main implements Runnable{
             e.printStackTrace();
             shouldExit = true;
         }
+        clientManager = new ClientManager(this);
         socketAccepter = new Thread(this);
         socketAccepter.start();
     }
@@ -49,6 +53,12 @@ public class Main implements Runnable{
         try {
             while (!shouldExit) {
                 Socket sock = serverSocket.accept();
+                clientManager.addClient(sock);
+                if (clientManager.clientConnections.size() == maxClients)
+                    break;
+            }
+            if (clientManager.clientConnections.size() == maxClients){
+                //We are good to go. Let's rock!
             }
         }catch (Exception e){
             System.err.println("Socket accepter thread has failed, exiting.");
