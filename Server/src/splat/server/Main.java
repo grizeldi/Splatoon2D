@@ -9,9 +9,10 @@ import java.net.Socket;
 public class Main implements Runnable{
     boolean shouldExit = false;
     private ServerSocket serverSocket;
+    private Thread socketAccepter;
 
     public static void main(String [] args){
-        new Main().run();
+        new Main();
     }
 
     public Main() {
@@ -24,6 +25,7 @@ public class Main implements Runnable{
                         if (!in.readLine().toLowerCase().equals("stop")) {
                             in.close();
                             shouldExit = true;
+                            socketAccepter.interrupt();
                         }
                     }
                 }catch (Exception e){
@@ -33,11 +35,13 @@ public class Main implements Runnable{
             }
         }).start();
         try {
-            serverSocket = new ServerSocket(78778);
+            serverSocket = new ServerSocket(7878);
         } catch (IOException e) {
             e.printStackTrace();
             shouldExit = true;
         }
+        socketAccepter = new Thread(this);
+        socketAccepter.start();
     }
 
     @Override

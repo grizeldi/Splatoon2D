@@ -71,14 +71,16 @@ public class Main extends BasicGame{
         }
 
         //Controller debug
-        if (!input.isButtonPressed(5, 0)){
-            shootButtonDown = false;
-        }
+        if (controllerUsed) {
+            if (!input.isButtonPressed(5, 0)) {
+                shootButtonDown = false;
+            }
 
-        System.out.println("Axis " + input.getAxisName(0, 4) + ":");
-        System.out.println(input.getAxisValue(0, 4));
-        System.out.println("Axis " + input.getAxisName(0, 5) + ":");
-        System.out.println(input.getAxisValue(0, 5));
+            System.out.println("Axis " + input.getAxisName(0, 4) + ":");
+            System.out.println(input.getAxisValue(0, 4));
+            System.out.println("Axis " + input.getAxisName(0, 5) + ":");
+            System.out.println(input.getAxisValue(0, 5));
+        }
     }
 
     @Override
@@ -102,7 +104,7 @@ public class Main extends BasicGame{
 
     public static void main(String [] args){
         try {
-            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", true));
+            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", false));
             //cont.setDisplayMode(cont.getScreenWidth(), cont.getScreenHeight(), true);
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);

@@ -14,7 +14,7 @@ public class TileMapHelper {
     public TileMapHelper() {
         try {
             backgroundMap = new TiledMap("data/tile/map.tmx");
-        } catch (SlickException e) {
+        } catch (Exception e) {
             System.exit(-1);
         }
         //Init blocked tiles.

@@ -54,19 +54,19 @@ public class MainLign extends GameObject implements UpdateAble {
         Input input = gameContainer.getInput();
         float movementSpeed = 0.3F;
         float absoluteX = x * -1 + gameContainer.getWidth() / 2 - 18, absoluteY = y * -1 + gameContainer.getHeight() / 2 - 18;
-        if (((input.isKeyDown(Input.KEY_A) && main.controllerUsed) || input.isControllerLeft(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_A) && !main.controllerUsed) || input.isControllerLeft(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x += tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y += tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if (((input.isKeyDown(Input.KEY_D) && main.controllerUsed) || input.isControllerRight(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_D) && !main.controllerUsed) || input.isControllerRight(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x -= tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y -= tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if(((input.isKeyDown(Input.KEY_W) && main.controllerUsed) || input.isControllerUp(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if(((input.isKeyDown(Input.KEY_W) && !main.controllerUsed) || input.isControllerUp(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x -= tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y -= tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
-        if (((input.isKeyDown(Input.KEY_S) && main.controllerUsed) || input.isControllerDown(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if (((input.isKeyDown(Input.KEY_S) && !main.controllerUsed) || input.isControllerDown(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x += tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y += tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
