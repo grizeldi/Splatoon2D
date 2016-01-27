@@ -6,7 +6,7 @@ import splat.updating.UpdateAble;
 
 import java.util.Random;
 
-public class SquidAI implements UpdateAble {
+public class SquidAI implements UpdateAble{
     private AISquid squid;
     private Random random = new Random();
     private static final float movementSpeed = 0.07F;
