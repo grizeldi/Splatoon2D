@@ -79,7 +79,16 @@ class SingleClientListenerThread extends Thread{
     public void run() {
         try {
             while (!shouldExit) {
-                if (in.available() > 0)
+                if (in.available() > 0){
+                    int b = in.read();
+                    switch (b){
+                        case 10:
+                            //Squid moved.
+                            int x = in.read();
+                            int y = in.read();
+                            relay.relayToAllExcept(new byte[]{(byte)x, (byte)y}, clientID);
+                    }
+                }
             }
         }catch (IOException e){
             Logger.getLogger("splat.server.SingleClientListenerThread").warning("Listener thread for client " + clientID + "failed.");

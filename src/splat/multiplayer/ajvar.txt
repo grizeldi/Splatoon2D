@@ -8,7 +8,9 @@ Specifikacija protokola server-->client:
 100 <x> <y> <colorID>   nov splat na x in y
 
 Specifikacija protokola client-->server:
-
+10 <x> <y>              premik ligna na x in y
+11 <rot>                obrat ligna na rot/10
+100 <x> <y>             nov splat na x in y
 
 Color IDji:
 0   oranžna
