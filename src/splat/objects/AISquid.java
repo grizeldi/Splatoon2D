@@ -1,6 +1,7 @@
 package splat.objects;
 
 import splat.Main;
+import splat.ai.NormalSquidAI;
 import splat.ai.SquidAI;
 import splat.factories.ColorSplatFactory;
 import org.newdawn.slick.*;
@@ -12,6 +13,7 @@ import splat.updating.UpdateAble;
 
 import java.awt.*;
 import java.awt.Color;
+import java.util.Random;
 
 //These's x and y are absolute.
 public class AISquid extends GameObject implements UpdateAble {
@@ -29,6 +31,11 @@ public class AISquid extends GameObject implements UpdateAble {
     public float opacity = 1.0F;
     private int splatCount = 0;
     private SoundEffectPlayer player;
+    public AIType aiType;
+
+    public enum AIType {
+        HARIKIRI, CAMPER, NORMAL;
+    }
 
     public AISquid(float x, float y, Color c, Main main) {
         color = c;
@@ -36,7 +43,19 @@ public class AISquid extends GameObject implements UpdateAble {
         mainLign = main.mainChar;
         mapHelper = main.mapHelper;
         player = main.soundPlayer;
-        ai = new SquidAI(this);
+        //INIT AI
+        switch (new Random().nextInt(AIType.values().length)){
+            case 0:
+                aiType = AIType.HARIKIRI;
+                break;
+            case 1:
+                aiType = AIType.CAMPER;
+                break;
+            default:
+                aiType = AIType.NORMAL;
+        }
+        ai = new NormalSquidAI(this);
+
         health = new HealthBar(333);
         this.x = x;
         this.y = y;
@@ -55,6 +74,8 @@ public class AISquid extends GameObject implements UpdateAble {
         collisionRectangle = new Rectangle(33, 33);
         representation.setCenterOfRotation(18, 18);
     }
+
+
 
     @Override
     public void update(GameContainer container, float tpf) {
