@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 public class Main implements Runnable{
     boolean shouldExit = false;
@@ -18,6 +19,7 @@ public class Main implements Runnable{
     }
 
     public Main(int i) {
+        Logger.getLogger("splat.server.Main").info("Starting Splatoon2D server.");
         maxClients = i;
         new Thread(new Runnable() {
             @Override
