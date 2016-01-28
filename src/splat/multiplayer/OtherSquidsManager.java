@@ -1,7 +1,13 @@
 package splat.multiplayer;
 
-/**
- * Created by grizeldi on 1/28/16.
- */
-public class OtherSquidsManager {
+import org.newdawn.slick.GameContainer;
+import splat.updating.UpdateAble;
+
+public class OtherSquidsManager implements UpdateAble{
+    private
+
+    @Override
+    public void update(GameContainer container, float tpf) {
+
+    }
 }

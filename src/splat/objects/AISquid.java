@@ -15,27 +15,25 @@ import java.awt.Color;
 
 //These's x and y are absolute.
 public class AISquid extends GameObject implements UpdateAble {
-    private Color color;
+    protected Color color;
     private SquidAI ai;
-    private Image representation;
-    private HealthBar health;
+    protected Image representation;
+    protected HealthBar health;
     public boolean isOnSplat = false;
     private boolean deadReported = false;
-    private ColorSplatFactory splatFactory;
+    protected ColorSplatFactory splatFactory;
     public TileMapHelper mapHelper;
-    private Rectangle collisionRectangle;
+    protected Rectangle collisionRectangle;
     public MainLign mainLign;
-    private SoundEffectPlayer soundEffectPlayer;
+    protected SoundEffectPlayer soundEffectPlayer;
     public float opacity = 1.0F;
     private int splatCount = 0;
-    private SoundEffectPlayer player;
 
     public AISquid(float x, float y, Color c, Main main) {
         color = c;
         splatFactory = main.splatFactory;
         mainLign = main.mainChar;
         mapHelper = main.mapHelper;
-        player = main.soundPlayer;
         ai = new SquidAI(this);
         health = new HealthBar(333);
         this.x = x;
