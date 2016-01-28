@@ -22,6 +22,7 @@ public class MainLign extends GameObject implements UpdateAble {
     public Rectangle collisionRectangle;
     private TileMapHelper mapHelper;
     public float health = 100;
+    private Main main;
 
     public MainLign(Color c, Main main) {
         if (c == Color.ORANGE){
@@ -44,6 +45,7 @@ public class MainLign extends GameObject implements UpdateAble {
         splatFactory = main.splatFactory;
         mapHelper = main.mapHelper;
         inkTank = new InkTank(c);
+        this.main = main;
     }
 
     @Override
@@ -52,31 +54,44 @@ public class MainLign extends GameObject implements UpdateAble {
         Input input = gameContainer.getInput();
         float movementSpeed = 0.3F;
         float absoluteX = x * -1 + gameContainer.getWidth() / 2 - 18, absoluteY = y * -1 + gameContainer.getHeight() / 2 - 18;
-        if (input.isKeyDown(Input.KEY_A) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_A) && !main.controllerUsed) || input.isControllerLeft(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x += tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y += tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if (input.isKeyDown(Input.KEY_D) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_D) && !main.controllerUsed) || input.isControllerRight(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x -= tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y -= tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if(input.isKeyDown(Input.KEY_W) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if(((input.isKeyDown(Input.KEY_W) && !main.controllerUsed) || input.isControllerUp(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x -= tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y -= tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
-        if (input.isKeyDown(Input.KEY_S) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if (((input.isKeyDown(Input.KEY_S) && !main.controllerUsed) || input.isControllerDown(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x += tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y += tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
         //Rotate to mouse
-        int mouseX = input.getMouseX() - 18, mouseY = input.getMouseY() - 18;
-        int lignX = (gameContainer.getWidth() / 2) - (representation.getWidth() / 2), lignY = (gameContainer.getHeight() / 2) - (representation.getHeight() / 2);
+        float mouseX = input.getMouseX() - 18, mouseY = input.getMouseY() - 18;
+        float lignX = (gameContainer.getWidth() / 2) - (representation.getWidth() / 2), lignY = (gameContainer.getHeight() / 2) - (representation.getHeight() / 2);
+
+        if (main.controllerUsed){
+            if (input.getAxisValue(0, 4) != 0.0F) {
+                mouseX = input.getAxisValue(0, 4) * 1000 + (gameContainer.getWidth() / 2 );
+            }else {
+                mouseX = gameContainer.getWidth() / 2;
+            }
+            if (input.getAxisValue(0, 5) != 0.0F) {
+                mouseY = input.getAxisValue(0, 5) * 1000 + (gameContainer.getHeight() / 2 );
+            }else {
+                mouseY = gameContainer.getHeight() / 2;
+            }
+        }
         float xDistance = mouseX - lignX, yDistance = mouseY - lignY;
         rotation = (float) Math.toDegrees(Math.atan2(yDistance, xDistance));
 
         //Apply changes
         representation.setRotation(rotation);
-        collisionRectangle.setLocation(lignX, lignY);
+        collisionRectangle.setLocation((int)lignX, (int)lignY);
 
         //Harm the squid or recharge ink tank
         if (splatFactory.intersectsWithSplat(collisionRectangle, Color.BLUE, (int) x, (int) y)){
