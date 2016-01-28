@@ -1,3 +1,12 @@
 Specifikacija protokola:
 
-0 <data> število igralcev v lobbyu.
+0 <data>                število igralcev v lobbyu.
+1 <clientID> <colorID>  init barv
+2                       start igre, zahteva pošiljanje začetnega x, y in rot
+10 <x> <y> <clientID>   premik ligna št. clientID na x in y
+11 <rot> <clientID>     obrat ligna na rot/10
+100 <x> <y> <colorID>   nov splat na x in y
+
+Color IDji:
+0   oranžna
+1   modra
