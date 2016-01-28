@@ -25,10 +25,11 @@ public class Main implements Runnable{
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
                     while (!shouldExit) {
-                        if (!in.readLine().toLowerCase().equals("stop")) {
+                        if (in.readLine().toLowerCase().equals("stop")) {
                             in.close();
                             shouldExit = true;
                             socketAccepter.interrupt();
+                            System.exit(1);
                         }
                     }
                 }catch (Exception e){
