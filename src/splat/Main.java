@@ -23,6 +23,10 @@ public class Main extends BasicGame{
     private boolean shootButtonDown;
     public boolean controllerUsed;
 
+    public enum GameModes {
+        SINGLEPLAYER, MULTIPLAYER;
+    }
+
     public Main(String title, boolean controllerUsed) {
         super(title);
         this.controllerUsed = controllerUsed;

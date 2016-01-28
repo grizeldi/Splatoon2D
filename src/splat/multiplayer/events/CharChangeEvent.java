@@ -2,6 +2,7 @@ package splat.multiplayer.events;
 
 public class CharChangeEvent extends NetworkEvent{
     private float newX, newY, newRotation;
+    private int clientID;
 
     public CharChangeEvent(int peerID, float newX, float newY, float newRotation) {
         super(peerID);
@@ -20,5 +21,9 @@ public class CharChangeEvent extends NetworkEvent{
 
     public float getNewRotation() {
         return newRotation;
+    }
+
+    public int getClientID() {
+        return clientID;
     }
 }

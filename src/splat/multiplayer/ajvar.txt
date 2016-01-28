@@ -1,4 +1,4 @@
-Specifikacija protokola:
+Specifikacija protokola server-->client:
 
 0 <data>                število igralcev v lobbyu.
 1 <clientID> <colorID>  init barv
@@ -7,6 +7,13 @@ Specifikacija protokola:
 11 <rot> <clientID>     obrat ligna na rot/10
 100 <x> <y> <colorID>   nov splat na x in y
 
+Specifikacija protokola client-->server:
+
+
 Color IDji:
 0   oranžna
 1   modra
+
+Potek:
+Client ---connect---> Server
+Server ---št igralcev---> Client
