@@ -12,6 +12,7 @@ public class Main extends BasicGame{
     public static final boolean DEBUG = false;
     public static boolean CONTROLLER_USED;
     public static int squidsKilled = 0;
+    public static GameModes modes;
 
     public TileMapHelper mapHelper;
     public MainLign mainChar;
@@ -30,9 +31,21 @@ public class Main extends BasicGame{
         SINGLEPLAYER, MULTIPLAYER;
     }
 
-    public Main(String title, boolean controllerUsed) {
+    public Main(String title, boolean controllerUsed, String mode) {
         super(title);
         CONTROLLER_USED = controllerUsed;
+        if (mode != null) {
+            switch (mode.toLowerCase()) {
+                case "singleplayer":
+                    modes = GameModes.SINGLEPLAYER;
+                    break;
+                case "multiplayer":
+                    modes = GameModes.MULTIPLAYER;
+                    break;
+            }
+        }else {
+            modes = GameModes.SINGLEPLAYER;
+        }
     }
 
     @Override
@@ -112,8 +125,12 @@ public class Main extends BasicGame{
     }
 
     public static void main(String [] args){
+        String mode = null;
+        if (args.length > 0){
+            mode = args[0];
+        }
         try {
-            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", false));
+            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", false, mode));
             //cont.setDisplayMode(cont.getScreenWidth(), cont.getScreenHeight(), true);
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);
