@@ -9,6 +9,8 @@ import splat.updating.Updater;
 import java.awt.Color;
 
 public class Main extends BasicGame{
+    public static final boolean DEBUG = false;
+
     public TileMapHelper mapHelper;
     public MainLign mainChar;
     private Updater updater = new Updater();
@@ -80,10 +82,12 @@ public class Main extends BasicGame{
                 shootButtonDown = false;
             }
 
-            System.out.println("Axis " + input.getAxisName(0, 4) + ":");
-            System.out.println(input.getAxisValue(0, 4));
-            System.out.println("Axis " + input.getAxisName(0, 5) + ":");
-            System.out.println(input.getAxisValue(0, 5));
+            if (DEBUG) {
+                System.out.println("Axis " + input.getAxisName(0, 4) + ":");
+                System.out.println(input.getAxisValue(0, 4));
+                System.out.println("Axis " + input.getAxisName(0, 5) + ":");
+                System.out.println(input.getAxisValue(0, 5));
+            }
         }
     }
 

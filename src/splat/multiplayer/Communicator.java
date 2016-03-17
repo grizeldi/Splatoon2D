@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class Communicator {
+public class Communicator implements Runnable{
     private Socket serverConnection;
     public OutputStream out;
     public InputStream in;
@@ -19,5 +19,11 @@ public class Communicator {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    //Converter thread
+    @Override
+    public void run() {
+
     }
 }

@@ -13,6 +13,7 @@ public class Main implements Runnable{
     private ServerSocket serverSocket;
     private Thread socketAccepter;
     private ClientManager clientManager;
+    MessageRelay relay;
 
     public static void main(String [] args){
         new Main(Integer.parseInt(args[0]));
@@ -61,7 +62,8 @@ public class Main implements Runnable{
                     break;
             }
             if (clientManager.clientConnections.size() == maxClients){
-                //We are good to go. Let's rock!
+                Logger.getLogger("splat.server.Main").info("All clients joined. Starting game.");
+                clientManager.startGame();
             }
         }catch (Exception e){
             System.err.println("Socket accepter thread has failed, exiting.");
