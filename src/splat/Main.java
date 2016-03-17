@@ -10,20 +10,21 @@ import java.awt.Color;
 
 public class Main extends BasicGame{
     public static final boolean DEBUG = false;
+    public static boolean CONTROLLER_USED;
+    public static int squidsKilled = 0;
 
     public TileMapHelper mapHelper;
     public MainLign mainChar;
-    private Updater updater = new Updater();
     public ColorSplatFactory splatFactory;
-    private NPCManager npcManager;
     public MusicPlayer musicPlayer;
-    private InkShootHelper splatHelper;
     public SoundEffectPlayer soundPlayer;
+    private NPCManager npcManager;
+    private InkShootHelper splatHelper;
+    private GUIRenderer guiRenderer;
+
+    private Updater updater = new Updater();
     private Image background;
-    GUIRenderer guiRenderer;
-    public static int squidsKilled = 0;
     private boolean shootButtonDown;
-    public boolean controllerUsed;
 
     public enum GameModes {
         SINGLEPLAYER, MULTIPLAYER;
@@ -31,7 +32,7 @@ public class Main extends BasicGame{
 
     public Main(String title, boolean controllerUsed) {
         super(title);
-        this.controllerUsed = controllerUsed;
+        CONTROLLER_USED = controllerUsed;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Main extends BasicGame{
             System.exit(1);
         }
 
-        if ((input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || (input.isButtonPressed(5,0) && !shootButtonDown && controllerUsed)) && !mainChar.inkTank.isEmpty()){
+        if ((input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || (input.isButtonPressed(5,0) && !shootButtonDown && CONTROLLER_USED)) && !mainChar.inkTank.isEmpty()){
             shootButtonDown = true;
             //TODO IMPORTANT!!! SPLAT LOCATION PLACEMENT!!!!!
             //splatFactory.createNewSplat(input.getMouseX() + (int)mainChar.x * -1, input.getMouseY() + (int)mainChar.y * -1, Color.ORANGE);
@@ -77,7 +78,7 @@ public class Main extends BasicGame{
         }
 
         //Controller debug
-        if (controllerUsed) {
+        if (CONTROLLER_USED) {
             if (!input.isButtonPressed(5, 0)) {
                 shootButtonDown = false;
             }
