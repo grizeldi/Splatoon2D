@@ -24,6 +24,8 @@ public class Communicator implements Runnable{
     //Converter thread
     @Override
     public void run() {
+        while (true){
 
+        }
     }
 }

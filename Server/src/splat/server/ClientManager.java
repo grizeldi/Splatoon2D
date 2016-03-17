@@ -1,6 +1,5 @@
 package splat.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,7 +37,7 @@ public class ClientManager implements Runnable{
             e.printStackTrace();
             throw new IOException(e);
         }
-        notifyClientsNumberChanged();
+        notifyClientsNumberChanged(true);
     }
 
     void startGame() throws IOException{
@@ -49,7 +48,12 @@ public class ClientManager implements Runnable{
         //TODO actually start a game
     }
 
-    private void notifyClientsNumberChanged() throws IOException{
+    private void notifyClientsNumberChanged(boolean delay) throws IOException{
+        if (delay){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {}
+        }
         byte newNum = (byte)clientConnections.size();
         for (Socket s : clientConnections){
             OutputStream out = s.getOutputStream();
