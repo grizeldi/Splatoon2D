@@ -2,6 +2,7 @@ package splat;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import splat.factories.*;
 import splat.multiplayer.Communicator;
 import splat.multiplayer.GameState;
@@ -40,7 +41,7 @@ public class Main extends BasicGame{
     public GameState gameState;
     public Communicator communicator;
     public OtherSquidsManager networkedSquidManager;
-    private int players = 0;
+    public int players = 0;
     private int framesPassed = 0;
     private Thread inGameUpdateListenerThread;
 
@@ -106,6 +107,21 @@ public class Main extends BasicGame{
                             if (code == 0){
                                 players = communicator.in.read();
                             }else if (code == 2){
+                                //Construct other squids
+                                networkedSquidManager.startSquidCreation();
+                                while (networkedSquidManager.tempColorArray[networkedSquidManager.tempColorArray.length-1] == null){
+                                    int i = communicator.in.read();
+                                    if (i == 1){
+                                        int clientId = communicator.in.read();
+                                        int colorId = communicator.in.read();
+                                        if (colorId == 0)
+                                            networkedSquidManager.tempColorArray[clientId] = Color.ORANGE;
+                                        else
+                                            networkedSquidManager.tempColorArray[clientId] = Color.BLUE;
+                                    }
+                                }
+                                networkedSquidManager.finalizeSquidCreation();
+                                //Start game
                                 inGameUpdateListenerThread = new InGameListenerThread(Main.this);
                                 inGameUpdateListenerThread.start();
                                 gameState = GameState.IN_GAME;
