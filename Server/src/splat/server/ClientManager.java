@@ -42,11 +42,16 @@ public class ClientManager implements Runnable{
     }
 
     void startGame() throws IOException{
+        //Determine colors
         for (Socket s : clientConnections){
-            OutputStream out = s.getOutputStream();
-            out.write(2);
+            if (clientConnections.indexOf(s) % 2 == 0){
+                main.relay.relayToAll(new byte[]{1, (byte) clientConnections.indexOf(s), 0});
+            }else {
+                main.relay.relayToAll(new byte[]{1, (byte) clientConnections.indexOf(s), 1});
+            }
         }
-        //TODO actually start a game
+        //Start game
+        main.relay.relayToAll(new byte[]{2});
     }
 
     private void notifyClientsNumberChanged(boolean delay) throws IOException{
@@ -68,22 +73,25 @@ public class ClientManager implements Runnable{
 class SingleClientListenerThread extends Thread{
     private final int clientID;
     private final InputStream in;
+    private final OutputStream out;
     private final MessageRelay relay;
     private boolean shouldExit;
 
     public SingleClientListenerThread(int clientID, Socket socket, MessageRelay relay) throws Exception{
         InputStream in1;
+        OutputStream out1;
         this.clientID = clientID;
         this.relay = relay;
         try {
             in1 = socket.getInputStream();
+            out1 = socket.getOutputStream();
         } catch (IOException e) {
-            in1 = null;
             Logger.getLogger("splat.server.SingleClientListenerThread").warning("Unable to create client listener thread for client " + clientID);
             e.printStackTrace();
             throw new Exception();
         }
         in = in1;
+        out = out1;
         start();
     }
 
@@ -94,16 +102,19 @@ class SingleClientListenerThread extends Thread{
                 if (in.available() > 0){
                     int b = in.read();
                     switch (b){
+                        case 0:
+                            //Client ID request
+                            out.write(new byte[]{3, (byte) clientID});
                         case 10:
                             //Squid moved.
                             int x = in.read();
                             int y = in.read();
-                            relay.relayToAllExcept(new byte[]{10, (byte)x, (byte)y}, clientID);
+                            relay.relayToAllExcept(new byte[]{10, (byte)x, (byte)y, (byte) clientID}, clientID);
                             break;
                         case 11:
                             //Squid rotated
                             int rot = in.read();
-                            relay.relayToAllExcept(new byte[]{11, (byte) rot}, clientID);
+                            relay.relayToAllExcept(new byte[]{11, (byte) rot, (byte) clientID}, clientID);
                             break;
                     }
                 }

@@ -6,11 +6,13 @@ import splat.factories.*;
 import splat.multiplayer.Communicator;
 import splat.multiplayer.GameState;
 import splat.multiplayer.InGameListenerThread;
+import splat.multiplayer.OtherSquidsManager;
 import splat.objects.mainChar.MainLign;
 import splat.updating.Updater;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
@@ -37,6 +39,7 @@ public class Main extends BasicGame{
     //Network stuff
     public GameState gameState;
     public Communicator communicator;
+    public OtherSquidsManager networkedSquidManager;
     private int players = 0;
     private int framesPassed = 0;
     private Thread inGameUpdateListenerThread;
@@ -85,11 +88,18 @@ public class Main extends BasicGame{
         if (modes == GameModes.MULTIPLAYER){
             gameState = GameState.LOBBY;
             communicator = new Communicator("127.0.0.1");
+            networkedSquidManager = new OtherSquidsManager(this);
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     Logger.getLogger("Network thread").info("Starting networking.");
+                    try {
+                        communicator.out.write(0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return;
+                    }
                     do {
                         try {
                             int code = communicator.in.read();
@@ -100,6 +110,8 @@ public class Main extends BasicGame{
                                 inGameUpdateListenerThread.start();
                                 gameState = GameState.IN_GAME;
                                 return;
+                            }else if (code == 3){
+                                System.out.println("Client ID of this client: " + communicator.in.read());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -149,6 +161,7 @@ public class Main extends BasicGame{
             }
 
             if (modes == GameModes.MULTIPLAYER){
+                networkedSquidManager.update(gameContainer, tpf);
                 if (framesPassed == 6){
                     framesPassed = 0;
                     //Send an update to server
@@ -158,6 +171,9 @@ public class Main extends BasicGame{
                         communicator.out.write((int) mainChar.y);
                         communicator.out.write(11);
                         communicator.out.write((int) mainChar.rotation);
+                    } catch (SocketException se){
+                        System.err.println("Server shutdown. Exiting.");
+                        System.exit(2);
                     } catch (IOException e) {
                         System.err.println("Failed to send update to server:");
                         e.printStackTrace();

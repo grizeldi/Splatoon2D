@@ -1,6 +1,7 @@
 package splat.multiplayer;
 
 import org.newdawn.slick.GameContainer;
+import splat.Main;
 import splat.objects.NetworkedSquid;
 import splat.updating.UpdateAble;
 
@@ -9,6 +10,11 @@ import java.util.Map;
 
 public class OtherSquidsManager implements UpdateAble{
     private Map<Integer, NetworkedSquid> squidMap;
+    private Main main;
+
+    public OtherSquidsManager(Main main) {
+        this.main = main;
+    }
 
     @Override
     public void update(GameContainer container, float tpf) {

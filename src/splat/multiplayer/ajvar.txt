@@ -3,11 +3,13 @@ Specifikacija protokola server-->client:
 0 <data>                število igralcev v lobbyu.
 1 <clientID> <colorID>  init barv
 2                       start igre, zahteva pošiljanje začetnega x, y in rot
+3 <clientID>            odgovor na request client IDja
 10 <x> <y> <clientID>   premik ligna št. clientID na x in y
 11 <rot> <clientID>     obrat ligna na rot/10
 100 <x> <y> <colorID>   nov splat na x in y
 
 Specifikacija protokola client-->server:
+0                       request client IDja
 10 <x> <y>              premik ligna na x in y
 11 <rot>                obrat ligna na rot/10
 100 <x> <y>             nov splat na x in y
@@ -19,4 +21,5 @@ Color IDji:
 Potek:
 Client ---connect---> Server
 Server ---št igralcev---> Client //Dokler niso vsi
+Server ---barve lignov---> Clietn //TODO
 Server ---start---> Client
