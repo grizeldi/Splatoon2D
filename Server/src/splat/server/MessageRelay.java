@@ -1,14 +1,16 @@
 package splat.server;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Used to relay messages to other clients.
  * @see splat.server.ClientManager
  */
 public class MessageRelay {
-    private Map<Integer, OutputStream> streamsMap;
+    private Map<Integer, OutputStream> streamsMap = new HashMap<>();
 
     public boolean relayToAll(byte [] data){
         try {
@@ -31,8 +33,13 @@ public class MessageRelay {
             }
             return true;
         }catch (IOException e){
+            Logger.getLogger("splat.server.MessageRelay").warning("Write failed:");
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void addClient(int id, OutputStream stream){
+        streamsMap.put(id, stream);
     }
 }

@@ -22,6 +22,7 @@ public class Main implements Runnable{
     public Main(int i) {
         Logger.getLogger("splat.server.Main").info("Starting Splatoon2D server.");
         maxClients = i;
+        relay = new MessageRelay();
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import splat.factories.*;
 import splat.multiplayer.Communicator;
 import splat.multiplayer.GameState;
+import splat.multiplayer.InGameListenerThread;
 import splat.objects.mainChar.MainLign;
 import splat.updating.Updater;
 
@@ -37,6 +38,8 @@ public class Main extends BasicGame{
     public GameState gameState;
     public Communicator communicator;
     private int players = 0;
+    private int framesPassed = 0;
+    private Thread inGameUpdateListenerThread;
 
     public enum GameModes {
         SINGLEPLAYER, MULTIPLAYER;
@@ -93,6 +96,8 @@ public class Main extends BasicGame{
                             if (code == 0){
                                 players = communicator.in.read();
                             }else if (code == 2){
+                                inGameUpdateListenerThread = new InGameListenerThread(Main.this);
+                                inGameUpdateListenerThread.start();
                                 gameState = GameState.IN_GAME;
                                 return;
                             }
@@ -142,6 +147,25 @@ public class Main extends BasicGame{
                     System.out.println(input.getAxisValue(0, 5));
                 }
             }
+
+            if (modes == GameModes.MULTIPLAYER){
+                if (framesPassed == 6){
+                    framesPassed = 0;
+                    //Send an update to server
+                    try {
+                        communicator.out.write(10);
+                        communicator.out.write((int) mainChar.x);
+                        communicator.out.write((int) mainChar.y);
+                        communicator.out.write(11);
+                        communicator.out.write((int) mainChar.rotation);
+                    } catch (IOException e) {
+                        System.err.println("Failed to send update to server:");
+                        e.printStackTrace();
+                    }
+                }else {
+                    framesPassed ++;
+                }
+            }
         }
     }
 
@@ -178,7 +202,7 @@ public class Main extends BasicGame{
             //cont.setDisplayMode(cont.getScreenWidth(), cont.getScreenHeight(), true);
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);
-            cont.setShowFPS(false);
+            cont.setShowFPS(true);
             cont.start();
         } catch (SlickException e) {
             e.printStackTrace();

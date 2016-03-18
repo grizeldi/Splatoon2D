@@ -32,6 +32,7 @@ public class ClientManager implements Runnable{
     void addClient(Socket s) throws IOException{
         clientConnections.add(s);
         try {
+            main.relay.addClient(clientConnections.indexOf(s), s.getOutputStream());
             new SingleClientListenerThread(clientConnections.indexOf(s), s, main.relay);
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,12 +98,12 @@ class SingleClientListenerThread extends Thread{
                             //Squid moved.
                             int x = in.read();
                             int y = in.read();
-                            relay.relayToAllExcept(new byte[]{(byte)x, (byte)y}, clientID);
+                            relay.relayToAllExcept(new byte[]{10, (byte)x, (byte)y}, clientID);
                             break;
                         case 11:
                             //Squid rotated
                             int rot = in.read();
-                            relay.relayToAllExcept(new byte[]{(byte) rot}, clientID);
+                            relay.relayToAllExcept(new byte[]{11, (byte) rot}, clientID);
                             break;
                     }
                 }
