@@ -42,6 +42,8 @@ public class ClientManager implements Runnable{
     }
 
     void startGame() throws IOException{
+        //Start game
+        main.relay.relayToAll(new byte[]{2});
         //Determine colors
         for (Socket s : clientConnections){
             if (clientConnections.indexOf(s) % 2 == 0){
@@ -50,8 +52,6 @@ public class ClientManager implements Runnable{
                 main.relay.relayToAll(new byte[]{1, (byte) clientConnections.indexOf(s), 1});
             }
         }
-        //Start game
-        main.relay.relayToAll(new byte[]{2});
     }
 
     private void notifyClientsNumberChanged(boolean delay) throws IOException{

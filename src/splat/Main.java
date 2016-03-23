@@ -17,7 +17,7 @@ import java.net.SocketException;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static boolean CONTROLLER_USED;
     public static int squidsKilled = 0;
     public static GameModes modes;
@@ -45,6 +45,8 @@ public class Main extends BasicGame{
     public int clientID;
     private int framesPassed = 0;
     private Thread inGameUpdateListenerThread;
+    private Color thisSquidColor;
+    private final Object sync = new Object();
 
     public enum GameModes {
         SINGLEPLAYER, MULTIPLAYER;
@@ -73,16 +75,18 @@ public class Main extends BasicGame{
         soundPlayer = new SoundEffectPlayer();
         mapHelper = new TileMapHelper();
         splatFactory = new ColorSplatFactory();
-        mainChar = new MainLign(Color.ORANGE, this);
-        npcManager = new NPCManager(this);
+        //mainChar = new MainLign(Color.ORANGE, this);
+        MainLign.loadImages();
+        if (modes == GameModes.SINGLEPLAYER){
+            npcManager = new NPCManager(this);
+            updater.addUpdateAble(npcManager);
+        }
         musicPlayer = new MusicPlayer();
         splatHelper = new InkShootHelper(this);
         guiRenderer = new GUIRenderer(gameContainer);
         background = new Image("data/back.jpg").getScaledCopy(gameContainer.getWidth(), gameContainer.getHeight());
 
-        updater.addUpdateAble(mainChar);
         updater.addUpdateAble(splatFactory);
-        updater.addUpdateAble(npcManager);
 
         musicPlayer.start();
 
@@ -120,7 +124,9 @@ public class Main extends BasicGame{
                                             networkedSquidManager.tempColorArray.add(clientId, Color.BLUE);
                                     }
                                 }
-                                networkedSquidManager.finalizeSquidCreation();
+                                synchronized (sync) {
+                                    thisSquidColor = networkedSquidManager.tempColorArray.get(clientID);
+                                }
                                 //Start game
                                 inGameUpdateListenerThread = new InGameListenerThread(Main.this);
                                 inGameUpdateListenerThread.start();
@@ -137,6 +143,8 @@ public class Main extends BasicGame{
                     }while (true);
                 }
             }).start();
+        }else {
+            mainChar = new MainLign(Color.ORANGE, this);
         }
         if (CONTROLLER_USED && DEBUG){
             Input input = gameContainer.getInput();
@@ -149,9 +157,18 @@ public class Main extends BasicGame{
 
     @Override
     public void update(GameContainer gameContainer, int tpf) throws SlickException {
-        if (modes == GameModes.SINGLEPLAYER || gameState == GameState.IN_GAME) {
-            if (mainChar.health > 0)
+        if ((thisSquidColor != null && thisSquidColor != Color.PINK) && modes == GameModes.MULTIPLAYER){
+            synchronized (sync) {
+                mainChar = new MainLign(thisSquidColor, this);
+                updater.addUpdateAble(mainChar);
+                networkedSquidManager.finalizeSquidCreation();
+                thisSquidColor = Color.PINK;
+            }
+        }
+        if ((modes == GameModes.SINGLEPLAYER || gameState == GameState.IN_GAME) && thisSquidColor == Color.PINK) {
+            if (mainChar.health > 0) {
                 updater.update(gameContainer, tpf);
+            }
 
             //Exit check
             Input input = gameContainer.getInput();
@@ -204,12 +221,14 @@ public class Main extends BasicGame{
 
     @Override
     public void render(GameContainer gameContainer, Graphics g) throws SlickException {
-        if (modes == GameModes.SINGLEPLAYER || gameState == GameState.IN_GAME) {
+        if ((modes == GameModes.SINGLEPLAYER || gameState == GameState.IN_GAME) && thisSquidColor == Color.PINK) {
             if (mainChar.health > 0) {
                 background.draw(0, 0);
                 mapHelper.getBackgroundMap().render((int) mainChar.x, (int) mainChar.y);
                 splatFactory.renderSplats((int) mainChar.x, (int) mainChar.y);
-                npcManager.renderSquids((int) mainChar.x, (int) mainChar.y);
+                if (modes == GameModes.SINGLEPLAYER) {
+                    npcManager.renderSquids((int) mainChar.x, (int) mainChar.y);
+                }
 
                 mainChar.getRepresentation().draw((gameContainer.getWidth() / 2) - (mainChar.getRepresentation().getWidth() / 2), (gameContainer.getHeight() / 2) - (mainChar.getRepresentation().getHeight() / 2));
                 mainChar.inkTank.render(gameContainer);

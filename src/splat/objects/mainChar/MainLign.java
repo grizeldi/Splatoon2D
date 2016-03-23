@@ -17,6 +17,7 @@ import java.awt.*;
  */
 public class MainLign extends GameObject implements UpdateAble {
     private Image representation;
+    private static Image orangeImage, blueImage;
     private ColorSplatFactory splatFactory;
     public InkTank inkTank;
     public Rectangle collisionRectangle;
@@ -26,17 +27,9 @@ public class MainLign extends GameObject implements UpdateAble {
 
     public MainLign(Color c, Main main) {
         if (c == Color.ORANGE){
-            try {
-                representation = new Image("data/sprites/oranzenLign.png");
-            } catch (SlickException e) {
-                System.exit(-1);
-            }
+            representation = orangeImage;
         }else if (c == Color.BLUE){
-            try {
-                representation = new Image("data/sprites/modrLign.png");
-            } catch (SlickException e) {
-                System.exit(-1);
-            }
+            representation = blueImage;
         }
         x = -100;
         y = -400;
@@ -115,5 +108,14 @@ public class MainLign extends GameObject implements UpdateAble {
 
     public Image getRepresentation() {
         return representation;
+    }
+
+    public static void loadImages(){
+        try {
+            orangeImage = new Image("data/sprites/oranzenLign.png");
+            blueImage = new Image("data/sprites/modrLign.png");
+        } catch (SlickException e) {
+            System.exit(-1);
+        }
     }
 }

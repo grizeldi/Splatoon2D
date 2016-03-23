@@ -6,10 +6,8 @@ import splat.objects.NetworkedSquid;
 import splat.updating.UpdateAble;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class OtherSquidsManager implements UpdateAble{
     private Map<Integer, NetworkedSquid> squidMap;
@@ -24,14 +22,13 @@ public class OtherSquidsManager implements UpdateAble{
 
     @Override
     public void update(GameContainer container, float tpf) {
-        for (Color c : tempColorArray){
-            if (c == Color.BLUE){
-                System.out.print("Blue ");
-            }else {
-                System.out.print("Orange ");
-            }
-            System.out.println();
+        for (int i = 0; i < squidMap.size(); i++){
+            squidMap.get(i).update(container, tpf);
         }
+    }
+
+    public void renderSquids(){
+
     }
 
     //--------------------------INIT STUFF----------------------------
