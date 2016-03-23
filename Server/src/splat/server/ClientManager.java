@@ -120,7 +120,7 @@ class SingleClientListenerThread extends Thread{
                 }
             }
         }catch (IOException e){
-            Logger.getLogger("splat.server.SingleClientListenerThread").warning("Listener thread for client " + clientID + "failed.");
+            Logger.getLogger("splat.server.SingleClientListenerThread").warning("Listener thread for client " + clientID + " failed.");
             e.printStackTrace();
         }
     }

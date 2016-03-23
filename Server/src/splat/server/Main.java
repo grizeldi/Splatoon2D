@@ -59,6 +59,7 @@ public class Main implements Runnable{
             while (!shouldExit) {
                 Socket sock = serverSocket.accept();
                 clientManager.addClient(sock);
+                Logger.getLogger("splat.server.Main").info("A new client connected.");
                 if (clientManager.clientConnections.size() == maxClients)
                     break;
             }

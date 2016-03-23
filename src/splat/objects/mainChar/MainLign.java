@@ -54,19 +54,19 @@ public class MainLign extends GameObject implements UpdateAble {
         Input input = gameContainer.getInput();
         float movementSpeed = 0.3F;
         float absoluteX = x * -1 + gameContainer.getWidth() / 2 - 18, absoluteY = y * -1 + gameContainer.getHeight() / 2 - 18;
-        if (((input.isKeyDown(Input.KEY_A) && !main.CONTROLLER_USED) || input.isControllerLeft(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_A) && !Main.CONTROLLER_USED) || (Main.CONTROLLER_USED && input.isControllerLeft(0))) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x += tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y += tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if (((input.isKeyDown(Input.KEY_D) && !main.CONTROLLER_USED) || input.isControllerRight(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
+        if (((input.isKeyDown(Input.KEY_D) && !Main.CONTROLLER_USED) || (Main.CONTROLLER_USED && input.isControllerRight(0))) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation + 90)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation + 90)))){
             x -= tpf / 2 * movementSpeed * Math.cos(Math.toRadians(rotation + 90));
             y -= tpf / 2 * movementSpeed * Math.sin(Math.toRadians(rotation + 90));
         }
-        if(((input.isKeyDown(Input.KEY_W) && !main.CONTROLLER_USED) || input.isControllerUp(0)) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if(((input.isKeyDown(Input.KEY_W) && !Main.CONTROLLER_USED) || (Main.CONTROLLER_USED && input.isControllerUp(0))) && !mapHelper.isBlocked(absoluteX + tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY + tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x -= tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y -= tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
-        if (((input.isKeyDown(Input.KEY_S) && !main.CONTROLLER_USED) || input.isControllerDown(0)) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
+        if (((input.isKeyDown(Input.KEY_S) && !Main.CONTROLLER_USED) || (Main.CONTROLLER_USED && input.isControllerDown(0))) && !mapHelper.isBlocked(absoluteX - tpf * movementSpeed * Math.cos(Math.toRadians(rotation)), absoluteY - tpf * movementSpeed * Math.sin(Math.toRadians(rotation)))){
             x += tpf * movementSpeed * Math.cos(Math.toRadians(rotation));
             y += tpf * movementSpeed * Math.sin(Math.toRadians(rotation));
         }
@@ -74,14 +74,14 @@ public class MainLign extends GameObject implements UpdateAble {
         float mouseX = input.getMouseX() - 18, mouseY = input.getMouseY() - 18;
         float lignX = (gameContainer.getWidth() / 2) - (representation.getWidth() / 2), lignY = (gameContainer.getHeight() / 2) - (representation.getHeight() / 2);
 
-        if (main.CONTROLLER_USED){
-            if (input.getAxisValue(0, 4) != 0.0F) {
-                mouseX = input.getAxisValue(0, 4) * 1000 + (gameContainer.getWidth() / 2 );
+        if (Main.CONTROLLER_USED){
+            if (input.getAxisValue(0, 3) != 0.0F) {
+                mouseX = input.getAxisValue(0, 3) * 1000 + (gameContainer.getWidth() / 2 );
             }else {
                 mouseX = gameContainer.getWidth() / 2;
             }
-            if (input.getAxisValue(0, 5) != 0.0F) {
-                mouseY = input.getAxisValue(0, 5) * 1000 + (gameContainer.getHeight() / 2 );
+            if (input.getAxisValue(0, 2) != 0.0F) {
+                mouseY = input.getAxisValue(0, 2) * 1000 + (gameContainer.getHeight() / 2 );
             }else {
                 mouseY = gameContainer.getHeight() / 2;
             }

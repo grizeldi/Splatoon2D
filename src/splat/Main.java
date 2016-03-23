@@ -17,7 +17,7 @@ import java.net.SocketException;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static boolean CONTROLLER_USED;
     public static int squidsKilled = 0;
     public static GameModes modes;
@@ -42,6 +42,7 @@ public class Main extends BasicGame{
     public Communicator communicator;
     public OtherSquidsManager networkedSquidManager;
     public int players = 0;
+    public int clientID;
     private int framesPassed = 0;
     private Thread inGameUpdateListenerThread;
 
@@ -108,16 +109,15 @@ public class Main extends BasicGame{
                                 players = communicator.in.read();
                             }else if (code == 2){
                                 //Construct other squids
-                                networkedSquidManager.startSquidCreation();
-                                while (networkedSquidManager.tempColorArray[networkedSquidManager.tempColorArray.length-1] == null){
+                                while (networkedSquidManager.tempColorArray.size() != players){
                                     int i = communicator.in.read();
                                     if (i == 1){
                                         int clientId = communicator.in.read();
                                         int colorId = communicator.in.read();
                                         if (colorId == 0)
-                                            networkedSquidManager.tempColorArray[clientId] = Color.ORANGE;
+                                            networkedSquidManager.tempColorArray.add(clientId, Color.ORANGE);
                                         else
-                                            networkedSquidManager.tempColorArray[clientId] = Color.BLUE;
+                                            networkedSquidManager.tempColorArray.add(clientId, Color.BLUE);
                                     }
                                 }
                                 networkedSquidManager.finalizeSquidCreation();
@@ -127,7 +127,8 @@ public class Main extends BasicGame{
                                 gameState = GameState.IN_GAME;
                                 return;
                             }else if (code == 3){
-                                System.out.println("Client ID of this client: " + communicator.in.read());
+                                clientID = communicator.in.read();
+                                System.out.println("Client ID of this client: " + clientID);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -136,6 +137,13 @@ public class Main extends BasicGame{
                     }while (true);
                 }
             }).start();
+        }
+        if (CONTROLLER_USED && DEBUG){
+            Input input = gameContainer.getInput();
+            System.out.println("-----Controller debug-----");
+            for (int i = 0; i < input.getAxisCount(0); i++){
+                System.out.println("Controller axis: " + input.getAxisName(0, i));
+            }
         }
     }
 
@@ -166,13 +174,6 @@ public class Main extends BasicGame{
             if (CONTROLLER_USED) {
                 if (!input.isButtonPressed(5, 0)) {
                     shootButtonDown = false;
-                }
-
-                if (DEBUG) {
-                    System.out.println("Axis " + input.getAxisName(0, 4) + ":");
-                    System.out.println(input.getAxisValue(0, 4));
-                    System.out.println("Axis " + input.getAxisName(0, 5) + ":");
-                    System.out.println(input.getAxisValue(0, 5));
                 }
             }
 
