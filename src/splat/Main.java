@@ -196,13 +196,13 @@ public class Main extends BasicGame{
 
             if (modes == GameModes.MULTIPLAYER){
                 networkedSquidManager.update(gameContainer, tpf);
-                if (framesPassed == 6){
+                if (framesPassed == 12){
                     framesPassed = 0;
                     //Send an update to server
                     try {
                         communicator.out.write(10);
-                        communicator.out.write((int) mainChar.x);
-                        communicator.out.write((int) mainChar.y);
+                        communicator.out.write(Math.abs((int) mainChar.x) + gameContainer.getWidth() / 2);
+                        communicator.out.write(Math.abs((int) mainChar.y) + gameContainer.getWidth() / 2);
                         communicator.out.write(11);
                         communicator.out.write((int) mainChar.rotation);
                     } catch (SocketException se){
@@ -228,6 +228,8 @@ public class Main extends BasicGame{
                 splatFactory.renderSplats((int) mainChar.x, (int) mainChar.y);
                 if (modes == GameModes.SINGLEPLAYER) {
                     npcManager.renderSquids((int) mainChar.x, (int) mainChar.y);
+                }else {
+                    networkedSquidManager.renderSquids();
                 }
 
                 mainChar.getRepresentation().draw((gameContainer.getWidth() / 2) - (mainChar.getRepresentation().getWidth() / 2), (gameContainer.getHeight() / 2) - (mainChar.getRepresentation().getHeight() / 2));

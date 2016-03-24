@@ -23,8 +23,7 @@ public class InGameListenerThread extends Thread {
                         int x = main.communicator.in.read();
                         int y = main.communicator.in.read();
                         squidId = main.communicator.in.read();
-                        //TODO update stuff
-                        System.out.println("Squid " + squidId + " update recieved");
+                        main.networkedSquidManager.updateSquidLoc(squidId, x, y);
                         break;
                     case 11:
                         int rot = main.communicator.in.read();

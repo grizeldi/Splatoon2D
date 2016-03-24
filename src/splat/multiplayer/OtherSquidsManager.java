@@ -12,6 +12,7 @@ import java.util.List;
 public class OtherSquidsManager implements UpdateAble{
     private Map<Integer, NetworkedSquid> squidMap;
     private Main main;
+    private final Object sync = new Object();
 
     public List<Color> tempColorArray= new ArrayList<>();
 
@@ -23,12 +24,24 @@ public class OtherSquidsManager implements UpdateAble{
     @Override
     public void update(GameContainer container, float tpf) {
         for (int i = 0; i < squidMap.size(); i++){
-            squidMap.get(i).update(container, tpf);
+            synchronized (sync) {
+                if (squidMap.get(i) != null)
+                    squidMap.get(i).update(container, tpf);
+            }
         }
     }
 
-    public void renderSquids(){
+    public void updateSquidLoc(int squidId, int x, int y){
+        NetworkedSquid squid = squidMap.get(squidId);
+        squid.x = x;
+        squid.y = y;
+    }
 
+    public void renderSquids(){
+        for (int i = 0; i < squidMap.size(); i++){
+            if (squidMap.get(i) != null)
+                squidMap.get(i).render((int) main.mainChar.x, (int) main.mainChar.y);
+        }
     }
 
     //--------------------------INIT STUFF----------------------------
@@ -36,7 +49,9 @@ public class OtherSquidsManager implements UpdateAble{
     public void finalizeSquidCreation(){
         for (int i = 0; i < tempColorArray.size(); i++){
             if (tempColorArray.get(i) != null && i != main.clientID){
-                squidMap.put(i, new NetworkedSquid(0, 0, tempColorArray.get(i), main));
+                synchronized (sync) {
+                    squidMap.put(i, new NetworkedSquid(0, 0, tempColorArray.get(i), main));
+                }
             }
         }
     }
