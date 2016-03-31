@@ -2,14 +2,18 @@ package splat.multiplayer;
 
 import splat.Main;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.SocketException;
+import java.nio.ByteBuffer;
 
 public class InGameListenerThread extends Thread {
     private Main main;
+    private DataInputStream dataIn;
 
     public InGameListenerThread(Main main) {
         this.main = main;
+        dataIn = new DataInputStream(main.communicator.in);
     }
 
     @Override
@@ -20,8 +24,8 @@ public class InGameListenerThread extends Thread {
                 int squidId;
                 switch (in) {
                     case 10:
-                        int x = main.communicator.in.read();
-                        int y = main.communicator.in.read();
+                        int x = dataIn.readInt();
+                        int y = dataIn.readInt();
                         squidId = main.communicator.in.read();
                         main.networkedSquidManager.updateSquidLoc(squidId, x, y);
                         break;

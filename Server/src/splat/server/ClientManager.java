@@ -1,10 +1,10 @@
 package splat.server;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -74,6 +74,8 @@ class SingleClientListenerThread extends Thread{
     private final int clientID;
     private final InputStream in;
     private final OutputStream out;
+    private final DataInputStream dataIn;
+    private final DataOutputStream dataOut;
     private final MessageRelay relay;
     private boolean shouldExit;
 
@@ -92,6 +94,8 @@ class SingleClientListenerThread extends Thread{
         }
         in = in1;
         out = out1;
+        dataIn = new DataInputStream(in);
+        dataOut = new DataOutputStream(out);
         start();
     }
 
@@ -107,9 +111,16 @@ class SingleClientListenerThread extends Thread{
                             out.write(new byte[]{3, (byte) clientID});
                         case 10:
                             //Squid moved.
-                            int x = in.read();
-                            int y = in.read();
-                            relay.relayToAllExcept(new byte[]{10, (byte)x, (byte)y, (byte) clientID}, clientID);
+                            int x = dataIn.readInt();
+                            int y = dataIn.readInt();
+                            ByteBuffer bbuff = ByteBuffer.allocate(8);
+                            bbuff.putInt(x);
+                            bbuff.putInt(y);
+                            byte [] array = new byte[10];
+                            array[0] = 10;
+                            System.arraycopy(bbuff.array(), 0, array, 1, 8);
+                            array[9] = (byte) clientID;
+                            relay.relayToAllExcept(array, clientID);
                             break;
                         case 11:
                             //Squid rotated

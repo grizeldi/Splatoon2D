@@ -14,6 +14,7 @@ import splat.updating.Updater;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.SocketException;
+import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
@@ -199,10 +200,13 @@ public class Main extends BasicGame{
                 if (framesPassed == 12){
                     framesPassed = 0;
                     //Send an update to server
+                    System.out.println("Main squid location: " + mainChar.x + " " + mainChar.y);
                     try {
+                        int xToSend = ((int) mainChar.x * -1) + (gameContainer.getWidth() / 2);
+                        int yToSend = ((int) mainChar.y * -1) + (gameContainer.getHeight() / 2);
                         communicator.out.write(10);
-                        communicator.out.write(Math.abs((int) mainChar.x) + gameContainer.getWidth() / 2);
-                        communicator.out.write(Math.abs((int) mainChar.y) + gameContainer.getWidth() / 2);
+                        communicator.dataOut.writeInt(xToSend);
+                        communicator.dataOut.writeInt(yToSend);
                         communicator.out.write(11);
                         communicator.out.write((int) mainChar.rotation);
                     } catch (SocketException se){
