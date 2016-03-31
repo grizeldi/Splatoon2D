@@ -32,7 +32,7 @@ public class InGameListenerThread extends Thread {
                     case 11:
                         int rot = main.communicator.in.read();
                         squidId = main.communicator.in.read();
-                        //TODO update stuff
+                        main.networkedSquidManager.updateSquidRot(squidId, rot);
                         break;
                 }
             }catch (SocketException e){

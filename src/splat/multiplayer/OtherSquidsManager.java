@@ -37,6 +37,11 @@ public class OtherSquidsManager implements UpdateAble{
         squid.y = y;
     }
 
+    public void updateSquidRot(int squidId, int rot){
+        NetworkedSquid squid = squidMap.get(squidId);
+        squid.rotation = rot;
+    }
+
     public void renderSquids(){
         for (int i = 0; i < squidMap.size(); i++){
             if (squidMap.get(i) != null)

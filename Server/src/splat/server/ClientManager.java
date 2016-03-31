@@ -75,7 +75,6 @@ class SingleClientListenerThread extends Thread{
     private final InputStream in;
     private final OutputStream out;
     private final DataInputStream dataIn;
-    private final DataOutputStream dataOut;
     private final MessageRelay relay;
     private boolean shouldExit;
 
@@ -95,7 +94,6 @@ class SingleClientListenerThread extends Thread{
         in = in1;
         out = out1;
         dataIn = new DataInputStream(in);
-        dataOut = new DataOutputStream(out);
         start();
     }
 
