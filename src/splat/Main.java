@@ -197,10 +197,9 @@ public class Main extends BasicGame{
 
             if (modes == GameModes.MULTIPLAYER){
                 networkedSquidManager.update(gameContainer, tpf);
-                if (framesPassed == 12){
+                if (framesPassed == 20){
                     framesPassed = 0;
                     //Send an update to server
-                    System.out.println("Main squid location: " + mainChar.x + " " + mainChar.y);
                     try {
                         int xToSend = ((int) mainChar.x * -1) + (gameContainer.getWidth() / 2);
                         int yToSend = ((int) mainChar.y * -1) + (gameContainer.getHeight() / 2);
