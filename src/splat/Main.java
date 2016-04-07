@@ -113,6 +113,7 @@ public class Main extends BasicGame{
                             int code = communicator.in.read();
                             if (code == 0){
                                 players = communicator.in.read();
+                                System.out.println("Players " + players);
                             }else if (code == 2){
                                 //Construct other squids
                                 while (networkedSquidManager.tempColorArray.size() != players){
@@ -120,6 +121,7 @@ public class Main extends BasicGame{
                                     if (i == 1){
                                         int clientId = communicator.in.read();
                                         int colorId = communicator.in.read();
+                                        System.out.println("Client #" + clientId + " is color " + colorId);
                                         if (colorId == 0)
                                             networkedSquidManager.tempColorArray.add(clientId, Color.ORANGE);
                                         else

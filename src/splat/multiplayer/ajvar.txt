@@ -22,4 +22,4 @@ Potek:
 Client ---connect---> Server
 Server ---št igralcev---> Client //Dokler niso vsi
 Server ---start---> Client
-Server ---barve lignov---> Client //TODO
+Server ---barve lignov---> Client
