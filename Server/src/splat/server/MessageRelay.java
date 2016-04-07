@@ -1,8 +1,7 @@
 package splat.server;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -11,9 +10,11 @@ import java.util.logging.Logger;
  */
 public class MessageRelay {
     private Map<Integer, OutputStream> streamsMap = new HashMap<>();
+    private List<DataPacket> packetsBuffer = new ArrayList<>();
+    private int [] allClientIds;
 
     public boolean relayToAll(byte [] data){
-        try {
+        /*try {
             for (OutputStream out : streamsMap.values()) {
                 out.write(data);
             }
@@ -21,7 +22,10 @@ public class MessageRelay {
         }catch (IOException e){
             e.printStackTrace();
             return false;
-        }
+        }*/
+        DataPacket packet = new DataPacket(allClientIds, data);
+        packetsBuffer.add(packet);
+        return true;
     }
 
     public boolean relayToAllExcept(byte [] data, int exceptClientID){
@@ -41,5 +45,23 @@ public class MessageRelay {
 
     public void addClient(int id, OutputStream stream){
         streamsMap.put(id, stream);
+        allClientIds = new int[streamsMap.size()];
+        Set<Integer> set = streamsMap.keySet();
+        int i = 0;
+        while (set.iterator().hasNext()){
+            int id2 = set.iterator().next();
+            allClientIds[i] = id2;
+            i++;
+        }
+    }
+
+    private class DataPacket {
+        int [] recieverIds;
+        byte [] messasge;
+
+        public DataPacket(int[] recieverIds, byte [] messasge) {
+            this.recieverIds = recieverIds;
+            this.messasge = messasge;
+        }
     }
 }

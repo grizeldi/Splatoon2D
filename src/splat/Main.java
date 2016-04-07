@@ -198,7 +198,7 @@ public class Main extends BasicGame{
 
             if (modes == GameModes.MULTIPLAYER){
                 networkedSquidManager.update(gameContainer, tpf);
-                if (framesPassed == 20){
+                if (framesPassed == 40){
                     framesPassed = 0;
                     //Send an update to server
                     try {
@@ -262,6 +262,7 @@ public class Main extends BasicGame{
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);
             cont.setShowFPS(true);
+            cont.setAlwaysRender(true);
             cont.start();
         } catch (SlickException e) {
             e.printStackTrace();

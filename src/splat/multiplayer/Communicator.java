@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class Communicator implements Runnable{
+public class Communicator {
     private Socket serverConnection;
     public OutputStream out;
     public DataOutputStream dataOut;
@@ -20,15 +20,7 @@ public class Communicator implements Runnable{
             dataOut = new DataOutputStream(out);
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
-        }
-    }
-
-    //Converter thread
-    @Override
-    public void run() {
-        while (true){
-
+            System.exit(-1);
         }
     }
 }
