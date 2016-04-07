@@ -14,7 +14,6 @@ import splat.updating.Updater;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.SocketException;
-import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
@@ -44,6 +43,7 @@ public class Main extends BasicGame{
     public OtherSquidsManager networkedSquidManager;
     public int players = 0;
     public int clientID;
+    public final String serverIp;
     private int framesPassed = 0;
     private Thread inGameUpdateListenerThread;
     private Color thisSquidColor;
@@ -53,9 +53,10 @@ public class Main extends BasicGame{
         SINGLEPLAYER, MULTIPLAYER;
     }
 
-    public Main(String title, boolean controllerUsed, String mode) {
+    public Main(String title, boolean controllerUsed, String mode, String serverIp) {
         super(title);
         CONTROLLER_USED = controllerUsed;
+        this.serverIp = serverIp;
         if (mode != null) {
             switch (mode.toLowerCase()) {
                 case "singleplayer":
@@ -250,12 +251,13 @@ public class Main extends BasicGame{
     }
 
     public static void main(String [] args){
-        String mode = null;
+        String mode = null, ip = null;
         if (args.length > 0){
             mode = args[0];
+            ip = args[1];
         }
         try {
-            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", false, mode));
+            AppGameContainer cont = new AppGameContainer(new Main("Splatoon 2D", false, mode, ip));
             //cont.setDisplayMode(cont.getScreenWidth(), cont.getScreenHeight(), true);
             cont.setDisplayMode(800, 500, false);
             cont.setVSync(true);
